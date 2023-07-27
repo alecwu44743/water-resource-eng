@@ -1,0 +1,914 @@
+﻿{
+    "000": {
+        "point": "000",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2784579.023",
+        "Abscissa-E(X)": "291985.559",
+        "Rel-0-points": "242.29"
+    },
+    "001": {
+        "point": "001",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2783852.907",
+        "Abscissa-E(X)": "292276.771",
+        "Rel-0-points": "-149"
+    },
+    "002": {
+        "point": "002",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2783802.43",
+        "Abscissa-E(X)": "292824.222",
+        "Rel-0-points": "-0.84"
+    },
+    "003": {
+        "point": "003",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2783612.502",
+        "Abscissa-E(X)": "293456.685",
+        "Rel-0-points": "76.26"
+    },
+    "004": {
+        "point": "004",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2783169.252",
+        "Abscissa-E(X)": "293990.167",
+        "Rel-0-points": "-84.18"
+    },
+    "005": {
+        "point": "005",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2782853.748",
+        "Abscissa-E(X)": "294381.288",
+        "Rel-0-points": "-10.79"
+    },
+    "006": {
+        "point": "006",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2782172.265",
+        "Abscissa-E(X)": "294925.399",
+        "Rel-0-points": "17.07"
+    },
+    "007": {
+        "point": "007",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2781797.955",
+        "Abscissa-E(X)": "295071.195",
+        "Rel-0-points": "26.82"
+    },
+    "008": {
+        "point": "008",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2781397.067",
+        "Abscissa-E(X)": "295286.747",
+        "Rel-0-points": "38.43"
+    },
+    "009": {
+        "point": "009",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2780653.878",
+        "Abscissa-E(X)": "295570.464",
+        "Rel-0-points": "-0.03"
+    },
+    "010": {
+        "point": "010",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2779981.197",
+        "Abscissa-E(X)": "295581.217",
+        "Rel-0-points": "-35.2"
+    },
+    "010A": {
+        "point": "010A",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2779611.227",
+        "Abscissa-E(X)": "295849.102",
+        "Rel-0-points": "2.41"
+    },
+    "011": {
+        "point": "011",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2779349.884",
+        "Abscissa-E(X)": "295922.948",
+        "Rel-0-points": "26.79"
+    },
+    "012": {
+        "point": "012",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2778737.3",
+        "Abscissa-E(X)": "296186.7",
+        "Rel-0-points": "-0.01"
+    },
+    "013": {
+        "point": "013",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2777999.277",
+        "Abscissa-E(X)": "296019.229",
+        "Rel-0-points": "-0.17"
+    },
+    "014": {
+        "point": "014",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2776945.401",
+        "Abscissa-E(X)": "296731.751",
+        "Rel-0-points": "43.19"
+    },
+    "015": {
+        "point": "015",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2776778.494",
+        "Abscissa-E(X)": "297441.07",
+        "Rel-0-points": "118.32"
+    },
+    "016": {
+        "point": "016",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2776598.997",
+        "Abscissa-E(X)": "298158.54",
+        "Rel-0-points": "39.89"
+    },
+    "017": {
+        "point": "017",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2776438.236",
+        "Abscissa-E(X)": "298645.094",
+        "Rel-0-points": "-96.55"
+    },
+    "018": {
+        "point": "018",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2776183.749",
+        "Abscissa-E(X)": "299193.631",
+        "Rel-0-points": "-158.16"
+    },
+    "019": {
+        "point": "019",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2775973.828",
+        "Abscissa-E(X)": "299538.849",
+        "Rel-0-points": "37.87"
+    },
+    "020": {
+        "point": "020",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2775544.725",
+        "Abscissa-E(X)": "300009.677",
+        "Rel-0-points": "39.33"
+    },
+    "020A": {
+        "point": "020A",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2775324.891",
+        "Abscissa-E(X)": "300265.197",
+        "Rel-0-points": "79.16"
+    },
+    "021": {
+        "point": "021",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2775087.119",
+        "Abscissa-E(X)": "300334.685",
+        "Rel-0-points": "38.6"
+    },
+    "022": {
+        "point": "022",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2774519.933",
+        "Abscissa-E(X)": "300629.595",
+        "Rel-0-points": "79.67"
+    },
+    "022A": {
+        "point": "022A",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2774499.826",
+        "Abscissa-E(X)": "300637.879",
+        "Rel-0-points": "-0.04"
+    },
+    "023": {
+        "point": "023",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2773972.977",
+        "Abscissa-E(X)": "300803.999",
+        "Rel-0-points": "-28.1"
+    },
+    "024": {
+        "point": "024",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2773350.617",
+        "Abscissa-E(X)": "300929.607",
+        "Rel-0-points": "5.09"
+    },
+    "024A": {
+        "point": "024A",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2772984.674",
+        "Abscissa-E(X)": "300909.41",
+        "Rel-0-points": "-0.31"
+    },
+    "025": {
+        "point": "025",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2772854.732",
+        "Abscissa-E(X)": "300874.107",
+        "Rel-0-points": "26.67"
+    },
+    "026": {
+        "point": "026",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2772380.709",
+        "Abscissa-E(X)": "300661.961",
+        "Rel-0-points": "4.94"
+    },
+    "026-1": {
+        "point": "026-1",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2772236.103",
+        "Abscissa-E(X)": "300547.374",
+        "Rel-0-points": "0"
+    },
+    "027": {
+        "point": "027",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2772014.498",
+        "Abscissa-E(X)": "300293.334",
+        "Rel-0-points": "38.4"
+    },
+    "027A": {
+        "point": "027A",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2771877.219",
+        "Abscissa-E(X)": "300143.526",
+        "Rel-0-points": "-0.03"
+    },
+    "027A-1": {
+        "point": "027A-1",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2771756.672",
+        "Abscissa-E(X)": "300012.282",
+        "Rel-0-points": "-0.01"
+    },
+    "028": {
+        "point": "028",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2771646.954",
+        "Abscissa-E(X)": "299893.154",
+        "Rel-0-points": "51.4"
+    },
+    "028-1": {
+        "point": "028-1",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2771389.547",
+        "Abscissa-E(X)": "299612.653",
+        "Rel-0-points": "-0.04"
+    },
+    "028A": {
+        "point": "028A",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2771554.159",
+        "Abscissa-E(X)": "299791.685",
+        "Rel-0-points": "-0.69"
+    },
+    "029": {
+        "point": "029",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2771334.665",
+        "Abscissa-E(X)": "299553.48",
+        "Rel-0-points": "91.68"
+    },
+    "029-1": {
+        "point": "029-1",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2771149.288",
+        "Abscissa-E(X)": "299350.801",
+        "Rel-0-points": "-0.02"
+    },
+    "030": {
+        "point": "030",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2771101.655",
+        "Abscissa-E(X)": "299144.999",
+        "Rel-0-points": "153.03"
+    },
+    "031": {
+        "point": "031",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2771101.655",
+        "Abscissa-E(X)": "299144.999",
+        "Rel-0-points": "115.17"
+    },
+    "031A": {
+        "point": "031A",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2770983.813",
+        "Abscissa-E(X)": "298282.118",
+        "Rel-0-points": "-0.05"
+    },
+    "032": {
+        "point": "032",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2770964.344",
+        "Abscissa-E(X)": "298258.282",
+        "Rel-0-points": "36.15"
+    },
+    "033": {
+        "point": "033",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2770713.002",
+        "Abscissa-E(X)": "297743.856",
+        "Rel-0-points": "77.96"
+    },
+    "034": {
+        "point": "034",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2770408.364",
+        "Abscissa-E(X)": "297134.272",
+        "Rel-0-points": "10.58"
+    },
+    "035": {
+        "point": "035",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2770054.819",
+        "Abscissa-E(X)": "296603.455",
+        "Rel-0-points": "62.99"
+    },
+    "035A": {
+        "point": "035A",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2770053.508",
+        "Abscissa-E(X)": "296521.834",
+        "Rel-0-points": "1.54"
+    },
+    "036": {
+        "point": "036",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2769782.753",
+        "Abscissa-E(X)": "296133.048",
+        "Rel-0-points": "13.25"
+    },
+    "036A": {
+        "point": "036A",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2769619.177",
+        "Abscissa-E(X)": "295865.289",
+        "Rel-0-points": "7.68"
+    },
+    "037": {
+        "point": "037",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2769265.863",
+        "Abscissa-E(X)": "295380.516",
+        "Rel-0-points": "77.85"
+    },
+    "038": {
+        "point": "038",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2768636.824",
+        "Abscissa-E(X)": "294751.826",
+        "Rel-0-points": "90.97"
+    },
+    "039": {
+        "point": "039",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2767908.469",
+        "Abscissa-E(X)": "294370.828",
+        "Rel-0-points": "263.79"
+    },
+    "040": {
+        "point": "040",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2767281.333",
+        "Abscissa-E(X)": "294153.159",
+        "Rel-0-points": "120.7"
+    },
+    "041": {
+        "point": "041",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2766503.476",
+        "Abscissa-E(X)": "294024.438",
+        "Rel-0-points": "57.63"
+    },
+    "041A": {
+        "point": "041A",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2766421.17",
+        "Abscissa-E(X)": "294032.98",
+        "Rel-0-points": "65.5"
+    },
+    "042": {
+        "point": "042",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2765955.993",
+        "Abscissa-E(X)": "293977.414",
+        "Rel-0-points": "212.02"
+    },
+    "043": {
+        "point": "043",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2765615.112",
+        "Abscissa-E(X)": "293964.592",
+        "Rel-0-points": "81.25"
+    },
+    "043A": {
+        "point": "043A",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2765367.585",
+        "Abscissa-E(X)": "293959.107",
+        "Rel-0-points": "124.38"
+    },
+    "044": {
+        "point": "044",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2765253.758",
+        "Abscissa-E(X)": "293956.733",
+        "Rel-0-points": "66.73"
+    },
+    "045": {
+        "point": "045",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2764604.75",
+        "Abscissa-E(X)": "293922.161",
+        "Rel-0-points": "53.54"
+    },
+    "046": {
+        "point": "046",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2764023.169",
+        "Abscissa-E(X)": "293686.272",
+        "Rel-0-points": "327.35"
+    },
+    "047": {
+        "point": "047",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2763665.542",
+        "Abscissa-E(X)": "293404.178",
+        "Rel-0-points": "383.58"
+    },
+    "047A": {
+        "point": "047A",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2763645.377",
+        "Abscissa-E(X)": "293383.95",
+        "Rel-0-points": "153.25"
+    },
+    "048": {
+        "point": "048",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2763281.546",
+        "Abscissa-E(X)": "292998.957",
+        "Rel-0-points": "299.03"
+    },
+    "049": {
+        "point": "049",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2763006.998",
+        "Abscissa-E(X)": "292625.684",
+        "Rel-0-points": "56.82"
+    },
+    "050": {
+        "point": "050",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2762753.948",
+        "Abscissa-E(X)": "292227.607",
+        "Rel-0-points": "450.28"
+    },
+    "051": {
+        "point": "051",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2762529.113",
+        "Abscissa-E(X)": "291548.55",
+        "Rel-0-points": "542.28"
+    },
+    "052": {
+        "point": "052",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2762408.663",
+        "Abscissa-E(X)": "290588.123",
+        "Rel-0-points": "451.55"
+    },
+    "053": {
+        "point": "053",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2762400.096",
+        "Abscissa-E(X)": "290200.579",
+        "Rel-0-points": "544.22"
+    },
+    "053A": {
+        "point": "053A",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2762287.705",
+        "Abscissa-E(X)": "289782.843",
+        "Rel-0-points": "3.48"
+    },
+    "054": {
+        "point": "054",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2762312.852",
+        "Abscissa-E(X)": "289411.013",
+        "Rel-0-points": "195.98"
+    },
+    "055": {
+        "point": "055",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2762103.073",
+        "Abscissa-E(X)": "288839.206",
+        "Rel-0-points": "74.05"
+    },
+    "056": {
+        "point": "056",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2761808.296",
+        "Abscissa-E(X)": "288369.124",
+        "Rel-0-points": "26.14"
+    },
+    "057": {
+        "point": "057",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2761456.715",
+        "Abscissa-E(X)": "287935.429",
+        "Rel-0-points": "58.63"
+    },
+    "058": {
+        "point": "058",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2761216.635",
+        "Abscissa-E(X)": "287377.537",
+        "Rel-0-points": "-40.68"
+    },
+    "059": {
+        "point": "059",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2761055.792",
+        "Abscissa-E(X)": "287275.584",
+        "Rel-0-points": "66.31"
+    },
+    "060": {
+        "point": "060",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2760957.989",
+        "Abscissa-E(X)": "287012.815",
+        "Rel-0-points": "52.07"
+    },
+    "061": {
+        "point": "061",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2760940.829",
+        "Abscissa-E(X)": "286458.197",
+        "Rel-0-points": "79.65"
+    },
+    "062": {
+        "point": "062",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2760398.464",
+        "Abscissa-E(X)": "286157.751",
+        "Rel-0-points": "339.77"
+    },
+    "062A": {
+        "point": "062A",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2759802.802",
+        "Abscissa-E(X)": "285616.336",
+        "Rel-0-points": "0.14"
+    },
+    "063": {
+        "point": "063",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2759718.185",
+        "Abscissa-E(X)": "285542.58",
+        "Rel-0-points": "389.15"
+    },
+    "064": {
+        "point": "064",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2759187.787",
+        "Abscissa-E(X)": "285126.861",
+        "Rel-0-points": "233.24"
+    },
+    "064A": {
+        "point": "064A",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2758644.633",
+        "Abscissa-E(X)": "284971.227",
+        "Rel-0-points": "248.45"
+    },
+    "065": {
+        "point": "065",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2758433.284",
+        "Abscissa-E(X)": "284712.388",
+        "Rel-0-points": "158.79"
+    },
+    "066": {
+        "point": "066",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2758075.91",
+        "Abscissa-E(X)": "284144.106",
+        "Rel-0-points": "-54.18"
+    },
+    "067": {
+        "point": "067",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2758268.589",
+        "Abscissa-E(X)": "283526.062",
+        "Rel-0-points": "-9.13"
+    },
+    "068": {
+        "point": "068",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2758557.363",
+        "Abscissa-E(X)": "282930.999",
+        "Rel-0-points": "0"
+    },
+    "069": {
+        "point": "069",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2758035.767",
+        "Abscissa-E(X)": "282371.883",
+        "Rel-0-points": "34.04"
+    },
+    "070": {
+        "point": "070",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2756955.956",
+        "Abscissa-E(X)": "282240.152",
+        "Rel-0-points": "743.05"
+    },
+    "071": {
+        "point": "071",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2756588.109",
+        "Abscissa-E(X)": "281958.581",
+        "Rel-0-points": "916.64"
+    },
+    "072": {
+        "point": "072",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2756077.897",
+        "Abscissa-E(X)": "281670.207",
+        "Rel-0-points": "1281.13"
+    },
+    "073": {
+        "point": "073",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2755850.441",
+        "Abscissa-E(X)": "280885.599",
+        "Rel-0-points": "1218.26"
+    },
+    "074": {
+        "point": "074",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2755508.406",
+        "Abscissa-E(X)": "280386.96",
+        "Rel-0-points": "916.27"
+    },
+    "075": {
+        "point": "075",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2755022.874",
+        "Abscissa-E(X)": "279882.019",
+        "Rel-0-points": "560.04"
+    },
+    "076": {
+        "point": "076",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2754452.341",
+        "Abscissa-E(X)": "279565.906",
+        "Rel-0-points": "238.51"
+    },
+    "077": {
+        "point": "077",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2754283.826",
+        "Abscissa-E(X)": "279038.383",
+        "Rel-0-points": "-15.99"
+    },
+    "078": {
+        "point": "078",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2753745.399",
+        "Abscissa-E(X)": "278593.55",
+        "Rel-0-points": "266.05"
+    },
+    "078A": {
+        "point": "078A",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2753809.507",
+        "Abscissa-E(X)": "278210.04",
+        "Rel-0-points": "-44.63"
+    },
+    "078B": {
+        "point": "078B",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2753111.65",
+        "Abscissa-E(X)": "278426.469",
+        "Rel-0-points": "0.94"
+    },
+    "079": {
+        "point": "079",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2752997.709",
+        "Abscissa-E(X)": "278303.695",
+        "Rel-0-points": "-171.83"
+    },
+    "080": {
+        "point": "080",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2752478.388",
+        "Abscissa-E(X)": "278183.253",
+        "Rel-0-points": "268.69"
+    },
+    "080A": {
+        "point": "080A",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2752076.458",
+        "Abscissa-E(X)": "277980.331",
+        "Rel-0-points": "43.33"
+    },
+    "081": {
+        "point": "081",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2751951.616",
+        "Abscissa-E(X)": "277787.931",
+        "Rel-0-points": "154"
+    },
+    "082": {
+        "point": "082",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2751499.909",
+        "Abscissa-E(X)": "277178.418",
+        "Rel-0-points": "-1.03"
+    },
+    "083": {
+        "point": "083",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2750536.486",
+        "Abscissa-E(X)": "277388.227",
+        "Rel-0-points": "698.27"
+    },
+    "084": {
+        "point": "084",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2750093.153",
+        "Abscissa-E(X)": "277246.347",
+        "Rel-0-points": "633.71"
+    },
+    "085": {
+        "point": "085",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2749561.409",
+        "Abscissa-E(X)": "276768.115",
+        "Rel-0-points": "472.92"
+    },
+    "086": {
+        "point": "086",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2748998.291",
+        "Abscissa-E(X)": "276859.04",
+        "Rel-0-points": "859.85"
+    },
+    "087": {
+        "point": "087",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2748476.447",
+        "Abscissa-E(X)": "276331.883",
+        "Rel-0-points": "531.23"
+    },
+    "088": {
+        "point": "088",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2748250.299",
+        "Abscissa-E(X)": "275795.848",
+        "Rel-0-points": "-0.03"
+    },
+    "089": {
+        "point": "089",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2747721.025",
+        "Abscissa-E(X)": "275985.247",
+        "Rel-0-points": "264.42"
+    },
+    "090": {
+        "point": "090",
+        "system": "97",
+        "mode": "GPS",
+        "Ordinate-N(Y)": "2747311.159",
+        "Abscissa-E(X)": "275739.589",
+        "Rel-0-points": "473.6"
+    },
+    "090A": {
+        "point": "090A",
+        "system": "97",
+        "mode": "distance",
+        "Ordinate-N(Y)": "2746480.522",
+        "Abscissa-E(X)": "275470.255",
+        "Rel-0-points": "-14.68"
+    }
+}
