@@ -17,15 +17,29 @@ def make_json(csvFilePath, jsonFilePath):
             # print(row)
             row["point"] = row["point"].replace("淡", "")
             row["system"] = row["system"].replace(" ", "")
-            row["mode"] = row["mode"].replace(" ", "")
             
-            if row["mode"] == "支距":
-                row["mode"] = "distance"
-            elif row["mode"] == "轉換":
-                row["mode"] = "transform"
+            row["L-mode"] = row["L-mode"].replace(" ", "")
+            if row["L-mode"] == "支距":
+                row["L-mode"] = "distance"
+            elif row["L-mode"] == "轉換":
+                row["L-mode"] = "transform"
             
-            row["Ordinate-N(Y)"] = row["Ordinate-N(Y)"].replace(" ", "")
-            row["Abscissa-E(X)"] = row["Abscissa-E(X)"].replace(" ", "")
+            row["L-Ordinate-N(Y)"] = row["L-Ordinate-N(Y)"].replace(" ", "")
+            row["L-Ordinate-N(Y)"] = row["L-Ordinate-N(Y)"].replace(",", "")
+            row["L-Abscissa-E(X)"] = row["L-Abscissa-E(X)"].replace(" ", "")
+            row["L-Abscissa-E(X)"] = row["L-Abscissa-E(X)"].replace(",", "")
+            
+            row["Rel-0-points"] = row["Rel-0-points"].replace(" ", "")
+            row["Rel-0-points"] = row["Rel-0-points"].replace(",", "")
+            
+            row["R-mode"] = row["R-mode"].replace(" ", "")
+            if row["R-mode"] == "支距":
+                row["R-mode"] = "distance"
+            elif row["R-mode"] == "轉換":
+                row["R-mode"] = "transform"
+            
+            row["R-Ordinate-N(Y)"] = row["R-Ordinate-N(Y)"].replace(" ", "")
+            row["R-Abscissa-E(X)"] = row["R-Abscissa-E(X)"].replace(" ", "")
             
             
             key = row['point']
@@ -36,7 +50,7 @@ def make_json(csvFilePath, jsonFilePath):
 
 
 dataFilePath = r"./data/"
-csvFilePath = r"tamsui - LEFT.csv"
-jsonFilePath = r"tamsui-left.json"
+csvFilePath = r"tamsui.csv"
+jsonFilePath = r"tamsui.json"
 
 make_json(dataFilePath + csvFilePath, jsonFilePath)
