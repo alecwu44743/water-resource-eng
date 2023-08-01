@@ -1,3 +1,4 @@
+import os
 import csv
 import json
 import pandas as pd
@@ -49,8 +50,31 @@ def make_json(csvFilePath, jsonFilePath):
         jsonf.write(json.dumps(data, indent=4))
 
 
-dataFilePath = r"./data/"
-csvFilePath = r"tamsui.csv"
-jsonFilePath = r"tamsui.json"
+def pos_transform(raw_data_path):
+    if not os.path.exists(raw_data_path):
+        print(f"The directory '{raw_data_path}' does not exist.")
+        return
+    
+    if not os.path.isdir(raw_data_path):
+        print(f"'{raw_data_path}' is not a directory.")
+        return
+    
+    files = os.listdir(raw_data_path)
+    print(f"Files in the directory '{raw_data_path}':")
+    for file_name in files:
+        print(file_name)
+    
+    # print(f"\n{len(files)} files in total.")
 
-make_json(dataFilePath + csvFilePath, jsonFilePath)
+
+
+if __name__ == "__main__":
+    dataFilePath = r"./data/"
+    csvFilePath = r"tamsui.csv"
+    jsonFilePath = r"tamsui.json"
+    
+    raw_data_path = "../river-prediction-nstc/result_non-duplicated"
+    save_data_path = "../river-prediction-nstc/result_non-duplicated"
+    
+    # make_json(dataFilePath + csvFilePath, jsonFilePath)
+    pos_transform(raw_data_path)
