@@ -61,8 +61,27 @@ def pos_transform(raw_data_path):
     
     files = os.listdir(raw_data_path)
     print(f"Files in the directory '{raw_data_path}':")
+    
+    month_id = ["120", "100", "050"]
+    status = "pass"
     for file_name in files:
-        print(file_name)
+        #message for processing the file
+        print(f"Processing '{file_name}'...", end="")
+        
+        for month in month_id:
+            if file_name.find(month) == -1:
+                continue
+            
+            mid_index = file_name.find(month)
+            year = file_name[1:mid_index]
+            river_section = file_name[mid_index+3:]
+            river_section = river_section.replace("csv", "")
+            river_section = river_section.replace(".", "")
+            
+            print(f" -> year: {year}, month: {month}, river_section: {river_section}")
+            
+            break
+        
     
     # print(f"\n{len(files)} files in total.")
 
