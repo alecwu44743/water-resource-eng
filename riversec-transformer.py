@@ -16,6 +16,7 @@ def make_json(csvFilePath, jsonFilePath):
             row["point"] = row["point"].replace("淡", "")
             row["system"] = row["system"].replace(" ", "")
             
+            #strat the process of Left Side of the River
             row["L-mode"] = row["L-mode"].replace(" ", "")
             if row["L-mode"] == "支距":
                 row["L-mode"] = "distance"
@@ -27,9 +28,13 @@ def make_json(csvFilePath, jsonFilePath):
             row["L-Abscissa-E(X)"] = row["L-Abscissa-E(X)"].replace(" ", "")
             row["L-Abscissa-E(X)"] = row["L-Abscissa-E(X)"].replace(",", "")
             
-            row["Rel-0-points"] = row["Rel-0-points"].replace(" ", "")
-            row["Rel-0-points"] = row["Rel-0-points"].replace(",", "")
+            row["L-Rel-0-points"] = row["L-Rel-0-points"].replace(" ", "")
+            row["L-Rel-0-points"] = row["L-Rel-0-points"].replace(",", "")
             
+            row["L-Elevation"] = row["L-Elevation"].replace(" ", "")
+            row["L-Elevation"] = row["L-Elevation"].replace(",", "")
+            
+            #strat the process of Right Side of the River
             row["R-mode"] = row["R-mode"].replace(" ", "")
             if row["R-mode"] == "支距":
                 row["R-mode"] = "distance"
@@ -37,7 +42,15 @@ def make_json(csvFilePath, jsonFilePath):
                 row["R-mode"] = "transform"
             
             row["R-Ordinate-N(Y)"] = row["R-Ordinate-N(Y)"].replace(" ", "")
+            row["R-Ordinate-N(Y)"] = row["R-Ordinate-N(Y)"].replace(",", "")
             row["R-Abscissa-E(X)"] = row["R-Abscissa-E(X)"].replace(" ", "")
+            row["R-Abscissa-E(X)"] = row["R-Abscissa-E(X)"].replace(",", "")
+            
+            row["R-Rel-0-points"] = row["R-Rel-0-points"].replace(" ", "")
+            row["R-Rel-0-points"] = row["R-Rel-0-points"].replace(",", "")
+            
+            row["R-Elevation"] = row["R-Elevation"].replace(" ", "")
+            row["R-Elevation"] = row["R-Elevation"].replace(",", "")
             
             
             key = row['point']
@@ -147,7 +160,7 @@ def pos_transform(raw_data_path):
                     found = False
                     pos = -1
                     
-                    if rel_0_points in x_ext:
+                    if rel_0_points in x_ext: # find the value
                         print(f" -> {x_ext[x_ext.index(rel_0_points)]} is the Rel-0-points.")
                         found = True
                         pos = x_ext.index(rel_0_points)
@@ -268,16 +281,16 @@ def pos_transform(raw_data_path):
 
 if __name__ == "__main__":
     dataFilePath = r"./data/"
-    csvFilePath = r"tamsui.csv"
+    csvFilePath = r"tamsui_new.csv"
     jsonFilePath = r"tamsui.json"
     
     raw_data_path = "../river-prediction-nstc/result_all"
     nonduplicated_data_path = "../river-prediction-nstc/result_non-duplicated"
     save_data_path = "../river-prediction-nstc/result_non-duplicated"
     
-    # make_json(dataFilePath + csvFilePath, jsonFilePath)
+    make_json(dataFilePath + csvFilePath, jsonFilePath)
     readjson2Dict(jsonFilePath)
     
-    pos_transform(raw_data_path)
+    # pos_transform(raw_data_path)
     
     # print(tamsui_json)
