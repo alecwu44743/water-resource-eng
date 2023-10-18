@@ -288,7 +288,7 @@ if __name__ == "__main__":
     nonduplicated_data_path = "../river-prediction-nstc/result_non-duplicated"
     save_data_path = "../river-prediction-nstc/result_non-duplicated"
     
-    make_json(dataFilePath + csvFilePath, jsonFilePath)
+    make_json(dataFilePath + csvFilePath, jsonFilePath) #make json file
     readjson2Dict(jsonFilePath)
     
     # pos_transform(raw_data_path)
