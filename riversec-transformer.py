@@ -284,7 +284,8 @@ if __name__ == "__main__":
     csvFilePath = r"tamsui_new.csv"
     jsonFilePath = r"tamsui.json"
     
-    raw_data_path = "../river-prediction-nstc/result_all"
+    raw_data_path = "../river-prediction-nstc/result_all" #Today is a good day xD
+
     nonduplicated_data_path = "../river-prediction-nstc/result_non-duplicated"
     save_data_path = "../river-prediction-nstc/result_non-duplicated"
     
