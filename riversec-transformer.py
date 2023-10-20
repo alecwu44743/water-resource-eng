@@ -55,6 +55,9 @@ def make_json(csvFilePath, jsonFilePath):
             
             key = row['point']
             data[key] = row
+            dx = pow((float(row["R-Abscissa-E(X)"]) - float(row["L-Abscissa-E(X)"])), 2)
+            dy = pow((float(row["R-Ordinate-N(Y)"]) - float(row["L-Ordinate-N(Y)"])), 2)
+            data[key]['distance'] = pow((dx + dy), 0.5)
             
     with open(jsonFilePath, 'w', encoding='utf-8-sig') as jsonf:
         jsonf.write(json.dumps(data, indent=4))
@@ -69,11 +72,6 @@ def readjson2Dict(jsonFilePath):
 def print_preprocessed_data(x_ext, y_ext):
     print(f" -> after data processing: x_ext: {x_ext}")
     print(f" -> after data processing: y_ext: {y_ext}")
-
-
-def interpolation(x1, y1, x2, y2, x):
-    y = y1 + (x - x1) * (y2 - y1) / (x2 - x1)
-    return y
 
 
 def fix_extdata(file_name, x_ext, y_ext):
@@ -139,6 +137,7 @@ def pos_transform(raw_data_path):
                     # Extract data using a list comprehension
                     x_ext = csv_reader[extracted_x].tolist()
                     y_ext = csv_reader[extracted_y].tolist()
+                    
                     # print(f" -> Extracted data: {extracted_data}")
                     if len(x_ext) == 0 or len(y_ext) == 0:
                         print(f" -> {file_name} data is empty.")
@@ -152,79 +151,86 @@ def pos_transform(raw_data_path):
                     if x_ext[0] > x_ext[-1]:
                         print(f" -> range check failed. [{x_ext[0]}, {x_ext[-1]}]")
                     
-                    print(f" -> x_ext: {x_ext}")
-                    print(f" -> y_ext: {y_ext}")
+                    # print(f" -> x_ext: {x_ext}")
+                    # print(f" -> y_ext: {y_ext}")
                     
-                    rel_0_points = tamsui_json[river_section]["Rel-0-points"] # checking -96.55
-                    rel_0_points = float(rel_0_points)
+                    R_rel_0_points = tamsui_json[river_section]["R-Rel-0-points"] # checking -96.55
+                    R_rel_0_points = float(R_rel_0_points)
+                    R_elevation = tamsui_json[river_section]["R-Elevation"]
+                    R_elevation = float(R_elevation)
+                    L_rel_0_points = tamsui_json[river_section]["L-Rel-0-points"] # checking -96.55
+                    L_rel_0_points = float(L_rel_0_points)
+                    L_elevation = tamsui_json[river_section]["L-Elevation"]
+                    L_elevation = float(L_elevation)
                     found = False
                     pos = -1
                     
-                    if rel_0_points in x_ext: # find the value
-                        print(f" -> {x_ext[x_ext.index(rel_0_points)]} is the Rel-0-points.")
+                    if R_rel_0_points in x_ext: # find the value
+                        print(f" -> {x_ext[x_ext.index(R_rel_0_points)]} is the R-Rel-0-points.")
                         found = True
-                        pos = x_ext.index(rel_0_points)
+                        pos = x_ext.index(R_rel_0_points)
                         x_ext = x_ext[pos:]
-                        y_ext = y_ext[pos:]
                         
                         print(f" -> pos: {pos}")
-                        print_preprocessed_data(x_ext, y_ext)
+                        # print_preprocessed_data(x_ext, y_ext)
                     
-                    if not found: # find the closest value (the difference is within 1 in absolute value)
-                        for value in x_ext:
-                            if abs(value - rel_0_points) <= 1:
-                                print(f" -> {value} is the closest value to Rel-0-points.")
-                                found = True
-                                
-                                pos = x_ext.index(value)
-                                x_ext = x_ext[pos:]
-                                y_ext = y_ext[pos:]
-                                
-                                print(f" -> pos: {pos}")
-                                print_preprocessed_data(x_ext, y_ext)
-                                break
-                    
-                    if not found: # find values ​​in range
-                        not_found_dict = {file_name: rel_0_points}
+                    if not found: # Insert values
+                        not_found_dict = {file_name: R_rel_0_points}
                         not_found_rel0points.append(not_found_dict)
                         
-                        print(f" -> {rel_0_points} is NOT found.")
+                        print(f" -> {R_rel_0_points} is NOT found.")
                         
-                        x1 = 0
-                        y1 = 0
-                        x2 = 0
-                        y2 = 0
                         for list_index in range(len(x_ext)-1):
-                            if x_ext[list_index] < rel_0_points and rel_0_points < x_ext[list_index+1]:
-                                x1 = x_ext[list_index]
-                                y1 = y_ext[list_index]
-                                x2 = x_ext[list_index+1]
-                                y2 = y_ext[list_index+1]
+                            if x_ext[list_index] < R_rel_0_points and R_rel_0_points < x_ext[list_index+1]:
                                 pos = list_index
                                 found = True
                                 
-                                print(f" -> {file_name} is doing interpolation.")
-                                y = interpolation(x1, y1, x2, y2, rel_0_points)
-                                x_ext.insert(pos+1, rel_0_points)
-                                y_ext.insert(pos+1, y)
+                                print(f" -> {file_name} insert value.")
+                                x_ext.insert(pos+1, R_rel_0_points)
+                                y_ext.insert(pos+1, R_elevation)
                                 break
                         
                         if found:
-                            print(f" -> {rel_0_points} is between {x1} and {x2}.")
+                            print(f" -> {R_rel_0_points} is between {x_ext[pos]} and {x_ext[pos+2]}.")
                             print(f" -> pos: {pos+1}")
-                            print_preprocessed_data(x_ext, y_ext)
+                            # print_preprocessed_data(x_ext, y_ext)
                         else:
-                            print(f" -> {rel_0_points} is NOT between {x_ext[0]} and {x_ext[-1]}.")
+                            print(f" -> {R_rel_0_points} is NOT between {x_ext[0]} and {x_ext[-1]}.")
                     
-                    if not found:
-                        print(f" -> {file_name} is doing shifting.")
-                        for list_index in range(len(x_ext)):
-                            x_ext[list_index] = x_ext[list_index] - rel_0_points
-                        pos = 0
+                    if L_rel_0_points in x_ext: # find the value
+                        print(f" -> {x_ext[x_ext.index(L_rel_0_points)]} is the L-Rel-0-points.")
                         found = True
+                        pos = x_ext.index(L_rel_0_points)
+                        x_ext = x_ext[:pos]
                         
-                        print_preprocessed_data(x_ext, y_ext)
+                        print(f" -> pos: {pos}")
+                        # print_preprocessed_data(x_ext, y_ext)
                     
+                    if not found: # Insert values
+                        not_found_dict = {file_name: L_rel_0_points}
+                        not_found_rel0points.append(not_found_dict)
+                        
+                        print(f" -> {L_rel_0_points} is NOT found.")
+                        
+                        for list_index in range(len(x_ext)-1):
+                            if x_ext[list_index] < L_rel_0_points and L_rel_0_points < x_ext[list_index+1]:
+                                pos = list_index
+                                found = True
+                                
+                                print(f" -> {file_name} insert value.")
+                                x_ext.insert(pos+1, L_rel_0_points)
+                                y_ext.insert(pos+1, L_elevation)
+                                break
+                        
+                        if found:
+                            print(f" -> {L_rel_0_points} is between {x_ext[pos]} and {x_ext[pos+2]}.")
+                            print(f" -> pos: {pos+1}")
+                            # print_preprocessed_data(x_ext, y_ext)
+                        else:
+                            print(f" -> {L_rel_0_points} is NOT between {x_ext[0]} and {x_ext[-1]}.")
+                    
+                    
+
                     print(f" -> {file_name} is doing fixing.")
                     x_ext, y_ext, isAcceptable = fix_extdata(file_name, x_ext, y_ext)
                     
@@ -232,8 +238,8 @@ def pos_transform(raw_data_path):
                         print(f" -> ERROR occurred in {file_name}.")
                         break
                     
-                    print(f" -> after fixing - round(numebr, 2): x_ext: {x_ext}")
-                    print(f" -> after fixing - round(numebr, 2): y_ext: {y_ext}")
+                    # print(f" -> after fixing - round(numebr, 2): x_ext: {x_ext}")
+                    # print(f" -> after fixing - round(numebr, 2): y_ext: {y_ext}")
                     
                     print(f" -> removing duplicated data in {file_name}.")
                     xtemp = []
@@ -257,8 +263,8 @@ def pos_transform(raw_data_path):
                     del xtemp
                     del ytemp
                     
-                    print(f" -> after removing duplicated data: x_ext: {x_ext}")
-                    print(f" -> after removing duplicated data: y_ext: {y_ext}")
+                    # print(f" -> after removing duplicated data: x_ext: {x_ext}")
+                    # print(f" -> after removing duplicated data: y_ext: {y_ext}")
                     
                     print(f" -> Process of {file_name} is all done.\n")
             else:
@@ -271,9 +277,9 @@ def pos_transform(raw_data_path):
     print(f"Total declined: {len(declined_list)}") # 4898
     print()
     #print Not found Rel-0-points line by line
-    for not_found in not_found_rel0points:
-        print(f"Not found Rel-0-points: {not_found}")
-    print(f"Total not found Rel-0-points: {len(not_found_rel0points)}")
+    # for not_found in not_found_rel0points:
+    #     print(f"Not found Rel-0-points: {not_found}")
+    # print(f"Total not found Rel-0-points: {len(not_found_rel0points)}")
     
     # print(f"\n{len(files)} files in total.")
 
@@ -284,14 +290,14 @@ if __name__ == "__main__":
     csvFilePath = r"tamsui_new.csv"
     jsonFilePath = r"tamsui.json"
     
-    raw_data_path = "../river-prediction-nstc/result_all" #Today is a good day xD
+    raw_data_path = "./result_all" #Today is a good day xD
 
-    nonduplicated_data_path = "../river-prediction-nstc/result_non-duplicated"
-    save_data_path = "../river-prediction-nstc/result_non-duplicated" #commit
+    nonduplicated_data_path = "./result_non-duplicated"
+    save_data_path = "./result_non-duplicated" #commit
     
     make_json(dataFilePath + csvFilePath, jsonFilePath) #make json file
     readjson2Dict(jsonFilePath) #read json
     
-    # pos_transform(raw_data_path)
+    pos_transform(raw_data_path)
     
     # print(tamsui_json)
