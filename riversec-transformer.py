@@ -4,6 +4,8 @@ import json
 import pandas as pd
 from itertools import islice
 
+from math import sqrt
+
 
 def make_json(csvFilePath, jsonFilePath):
     data = {}
@@ -86,6 +88,20 @@ def fix_extdata(file_name, x_ext, y_ext):
             y_ext[list_index] = round(y_ext[list_index], 2)
     
     return x_ext, y_ext, isAcceptable
+
+
+def validate_data(new_x, ex_data, ny_data):
+    if len(ex_data) != len(ny_data):
+        print("Data is not complete.")
+        return False # if the data is not complete
+    
+    for list_index in range(1, len(ex_data)):
+        check_value = sqrt(pow((ex_data[list_index] - ex_data[0]), 2) + pow((ny_data[list_index] - ny_data[0]), 2))
+        if abs(check_value - new_x[list_index]) > 0.2:
+            print("Data is not correct.")
+            return False # if the value is not correct
+    
+    return True #pass the validation
 
 
 def pos_transform(raw_data_path):
@@ -263,6 +279,23 @@ def pos_transform(raw_data_path):
                     del xtemp
                     del ytemp
                     
+                    '''
+                    This is a exmple for using the function of validate_data(new_x, ex_data, ny_data)
+                    
+                    90A:
+                    test_new_x = [0.0000, 4.7300, 12.1500, 14.3600]
+                    test_ex_data = [275470.255, 275474.1711, 275480.3151, 275482.1451]
+                    test_ny = [2746480.522, 2746477.8695, 2746473.7094, 2746472.4703]
+                    
+                    if validate_data(test_new_x, test_ex_data, test_ny):
+                        print(" -> Data is correct.")
+                    else:
+                        print(f" -> A validation error occurred in the process of removing duplicated data in {file_name}.")
+                        break
+                    '''
+                    
+                    
+                    
                     # print(f" -> after removing duplicated data: x_ext: {x_ext}")
                     # print(f" -> after removing duplicated data: y_ext: {y_ext}")
                     
@@ -295,7 +328,7 @@ if __name__ == "__main__":
     nonduplicated_data_path = "./result_non-duplicated"
     save_data_path = "./result_non-duplicated" #commit
     
-    make_json(dataFilePath + csvFilePath, jsonFilePath) #make json file
+    # make_json(dataFilePath + csvFilePath, jsonFilePath) #make json file
     readjson2Dict(jsonFilePath) #read json
     
     pos_transform(raw_data_path)
