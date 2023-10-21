@@ -98,11 +98,14 @@ def validate_data(new_x, ex_data, ny_data):
     for list_index in range(1, len(ex_data)):
         check_value = sqrt(pow((ex_data[list_index] - ex_data[0]), 2) + pow((ny_data[list_index] - ny_data[0]), 2))
         if abs(check_value - new_x[list_index]) > 0.2:
-            print("Data is not correct.")
+            print("Data is not correct. ")
+            print(f"The delta is {abs(check_value - new_x[list_index])}")
             return False # if the value is not correct
     
     return True #pass the validation
 
+def axis_predict_formula(curr_rel_0, last_rel_0, first_axis, last_axis):
+    return (curr_rel_0 * (last_axis - first_axis) + (last_rel_0 * first_axis)) / last_rel_0 # the formula to predict next value of axis(x or y)
 
 def pos_transform(raw_data_path):
     if not os.path.exists(raw_data_path):
@@ -119,6 +122,7 @@ def pos_transform(raw_data_path):
     month_id = ["120", "100", "050"]
     status = "pass"
     declined_list = []
+    Correct_list = []
     not_found_rel0points = []
     for file_name in files:
         #message for processing the file
@@ -167,9 +171,15 @@ def pos_transform(raw_data_path):
                     if x_ext[0] > x_ext[-1]:
                         print(f" -> range check failed. [{x_ext[0]}, {x_ext[-1]}]")
                     
-                    # print(f" -> x_ext: {x_ext}")
-                    # print(f" -> y_ext: {y_ext}")
-                    
+                    print(f" -> x_ext: {x_ext}")
+                    print(f" -> y_ext: {y_ext}")
+
+                    # df1 = pd.DataFrame(x_ext)
+                    # df2 = pd.DataFrame(y_ext)
+
+                    # df1.to_csv("x.txt")
+                    # df2.to_csv("y.txt")
+
                     R_rel_0_points = tamsui_json[river_section]["R-Rel-0-points"] # checking -96.55
                     R_rel_0_points = float(R_rel_0_points)
                     R_elevation = tamsui_json[river_section]["R-Elevation"]
@@ -181,19 +191,32 @@ def pos_transform(raw_data_path):
                     found = False
                     pos = -1
                     
-                    if R_rel_0_points in x_ext: # find the value
+                    if R_rel_0_points in x_ext: # find the value (Right side)
                         print(f" -> {x_ext[x_ext.index(R_rel_0_points)]} is the R-Rel-0-points.")
                         found = True
                         pos = x_ext.index(R_rel_0_points)
-                        x_ext = x_ext[pos:]
-                        
+
+                        for list_index in range(len(x_ext)-1): 
+                            if(x_ext[list_index] == x_ext[pos] and y_ext[list_index] == R_elevation):
+                                pos = list_index # the currect position of rel_0
+                                continue
+                            elif(x_ext[list_index] == x_ext[pos]): # remove the duplicated rel_0
+                                x_ext.remove(x_ext[list_index])
+                                y_ext.remove(y_ext[list_index])
+
+                            if(x_ext[list_index] > x_ext[pos]):
+                                break
+
+                        x_ext = x_ext[:pos]
+                        y_ext = y_ext[:pos]
+
                         print(f" -> pos: {pos}")
                         # print_preprocessed_data(x_ext, y_ext)
                     
-                    if not found: # Insert values
+                    if not found: # Insert values (Right side)
                         not_found_dict = {file_name: R_rel_0_points}
                         not_found_rel0points.append(not_found_dict)
-                        
+        
                         print(f" -> {R_rel_0_points} is NOT found.")
                         
                         for list_index in range(len(x_ext)-1):
@@ -204,30 +227,53 @@ def pos_transform(raw_data_path):
                                 print(f" -> {file_name} insert value.")
                                 x_ext.insert(pos+1, R_rel_0_points)
                                 y_ext.insert(pos+1, R_elevation)
+
+                                x_ext = x_ext[:pos+2]
+                                y_ext = y_ext[:pos+2]
+
                                 break
                         
                         if found:
-                            print(f" -> {R_rel_0_points} is between {x_ext[pos]} and {x_ext[pos+2]}.")
+                            pos = x_ext.index(R_rel_0_points)
+                            # print(f" -> {R_rel_0_points} is between {x_ext[pos]} and {x_ext[pos+2]}.")
                             print(f" -> pos: {pos+1}")
                             # print_preprocessed_data(x_ext, y_ext)
                         else:
                             print(f" -> {R_rel_0_points} is NOT between {x_ext[0]} and {x_ext[-1]}.")
                     
-                    if L_rel_0_points in x_ext: # find the value
+                    found = False # Reset found to false for left side
+                    
+                    if L_rel_0_points in x_ext: # find the value (Left side)
                         print(f" -> {x_ext[x_ext.index(L_rel_0_points)]} is the L-Rel-0-points.")
                         found = True
                         pos = x_ext.index(L_rel_0_points)
-                        x_ext = x_ext[:pos]
+
+                        for list_index in range(len(x_ext)-1):
+                            if(x_ext[list_index] == x_ext[pos] and y_ext[list_index] == L_elevation):
+                                pos = list_index # the currect position of rel_0
+                                continue
+                            elif(x_ext[list_index] == x_ext[pos]): # remove the duplicated rel_0
+                                x_ext.remove(x_ext[list_index])
+                                y_ext.remove(y_ext[list_index])
+
+                            if(x_ext[list_index] > x_ext[pos]):
+                                break
                         
+                        # print(f" -> x_ext: {x_ext}")
+                        # print(f" -> y_ext: {y_ext}")
+
+                        x_ext = x_ext[pos:]
+                        y_ext = y_ext[pos:]
+
                         print(f" -> pos: {pos}")
                         # print_preprocessed_data(x_ext, y_ext)
                     
-                    if not found: # Insert values
+                    if not found: # Insert values (Left side)
                         not_found_dict = {file_name: L_rel_0_points}
                         not_found_rel0points.append(not_found_dict)
                         
                         print(f" -> {L_rel_0_points} is NOT found.")
-                        
+                        print(f" -> x_ext : {x_ext}")
                         for list_index in range(len(x_ext)-1):
                             if x_ext[list_index] < L_rel_0_points and L_rel_0_points < x_ext[list_index+1]:
                                 pos = list_index
@@ -236,15 +282,19 @@ def pos_transform(raw_data_path):
                                 print(f" -> {file_name} insert value.")
                                 x_ext.insert(pos+1, L_rel_0_points)
                                 y_ext.insert(pos+1, L_elevation)
+
+                                x_ext = x_ext[pos+1:]
+                                y_ext = y_ext[pos+1:]
                                 break
                         
                         if found:
-                            print(f" -> {L_rel_0_points} is between {x_ext[pos]} and {x_ext[pos+2]}.")
+                            pos = x_ext.index(L_rel_0_points)
+                            # print(f" -> {L_rel_0_points} is between {x_ext[pos]} and {x_ext[pos+2]}.")
                             print(f" -> pos: {pos+1}")
                             # print_preprocessed_data(x_ext, y_ext)
                         else:
                             print(f" -> {L_rel_0_points} is NOT between {x_ext[0]} and {x_ext[-1]}.")
-                    
+
                     
 
                     print(f" -> {file_name} is doing fixing.")
@@ -256,7 +306,7 @@ def pos_transform(raw_data_path):
                     
                     # print(f" -> after fixing - round(numebr, 2): x_ext: {x_ext}")
                     # print(f" -> after fixing - round(numebr, 2): y_ext: {y_ext}")
-                    
+
                     print(f" -> removing duplicated data in {file_name}.")
                     xtemp = []
                     ytemp = []
@@ -279,6 +329,11 @@ def pos_transform(raw_data_path):
                     del xtemp
                     del ytemp
                     
+                    # df1 = pd.DataFrame(x_ext)
+                    # df2 = pd.DataFrame(y_ext)
+
+                    # df1.to_csv("x1.txt",sep='\t')
+                    # df2.to_csv("y1.txt",sep='\t')
                     '''
                     This is a exmple for using the function of validate_data(new_x, ex_data, ny_data)
                     
@@ -292,13 +347,40 @@ def pos_transform(raw_data_path):
                     else:
                         print(f" -> A validation error occurred in the process of removing duplicated data in {file_name}.")
                         break
-                    '''
+                    ''' 
+
+                    print(f" -> after removing duplicated data: x_ext: {x_ext}")
+                    print(f" -> after removing duplicated data: y_ext: {y_ext}")
                     
+                    L_Ordinate_N_Y = tamsui_json[river_section]["L-Ordinate-N(Y)"]
+                    L_Ordinate_N_Y = float(L_Ordinate_N_Y) # first Y
+                    L_Abscissa_E_X = tamsui_json[river_section]["L-Abscissa-E(X)"]
+                    L_Abscissa_E_X = float(L_Abscissa_E_X) # first X
+                    R_Ordinate_N_Y = tamsui_json[river_section]["R-Ordinate-N(Y)"]
+                    R_Ordinate_N_Y = float(R_Ordinate_N_Y) # last Y
+                    R_Abscissa_E_X = tamsui_json[river_section]["R-Abscissa-E(X)"]
+                    R_Abscissa_E_X = float(R_Abscissa_E_X) # last X
+                    axis_x_predict_list = []
+                    axis_y_predict_list = []
+                    print(f" -> Computing the value of axis in {file_name}.")
+                    axis_x_predict_list.append(L_Abscissa_E_X)
+                    axis_y_predict_list.append(L_Ordinate_N_Y)
+                    x_ext[0] = 0
+                    # curr_rel_0, last_rel_0, first_axis, last_axis
+                    for index in range(1,len(x_ext)):
+                        x_ext[index] -= x_ext[0]
+                        predict_x = axis_predict_formula(x_ext[index],x_ext[-1],L_Abscissa_E_X,R_Abscissa_E_X)
+                        predict_y = axis_predict_formula(x_ext[index],x_ext[-1],L_Ordinate_N_Y,R_Ordinate_N_Y)
+                        # print(f"{predict_x}, {predict_y}")
+                        axis_x_predict_list.append(predict_x)
+                        axis_y_predict_list.append(predict_y)
+                    # print(f"{axis_x_predict_list}")
+                    # print(f"{axis_y_predict_list}")
                     
-                    
-                    # print(f" -> after removing duplicated data: x_ext: {x_ext}")
-                    # print(f" -> after removing duplicated data: y_ext: {y_ext}")
-                    
+                    isVaild = validate_data(x_ext, axis_x_predict_list, axis_y_predict_list)
+                    if(isVaild):
+                        Correct_list.append(river_section)
+                    # print(f"{river_section} is {isVaild}")
                     print(f" -> Process of {file_name} is all done.\n")
             else:
                 print(f" -> {river_section} is DECLINED.\n")
@@ -306,6 +388,9 @@ def pos_transform(raw_data_path):
             
             break
     
+    print(f"Correct list: {Correct_list}")
+    print(f"Total correct: {len(Correct_list)}") 
+    print()
     print(f"Declined list: {declined_list}")
     print(f"Total declined: {len(declined_list)}") # 4898
     print()
@@ -315,7 +400,6 @@ def pos_transform(raw_data_path):
     # print(f"Total not found Rel-0-points: {len(not_found_rel0points)}")
     
     # print(f"\n{len(files)} files in total.")
-
 
 
 if __name__ == "__main__":
