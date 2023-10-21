@@ -97,15 +97,19 @@ def validate_data(new_x, ex_data, ny_data):
     
     for list_index in range(1, len(ex_data)):
         check_value = sqrt(pow((ex_data[list_index] - ex_data[0]), 2) + pow((ny_data[list_index] - ny_data[0]), 2))
+        # print(f"The delta is {check_value} - {new_x[list_index]} = {abs(check_value - new_x[list_index])} at pos: {list_index}")
         if abs(check_value - new_x[list_index]) > 0.2:
             print("Data is not correct. ")
-            print(f"The delta is {abs(check_value - new_x[list_index])}")
+            # print(f"The delta is {check_value} - {new_x[list_index]} = {abs(check_value - new_x[list_index])}")
             return False # if the value is not correct
     
     return True #pass the validation
 
 def axis_predict_formula(curr_rel_0, last_rel_0, first_axis, last_axis):
-    return (curr_rel_0 * (last_axis - first_axis) + (last_rel_0 * first_axis)) / last_rel_0 # the formula to predict next value of axis(x or y)
+    r = (round(curr_rel_0, 2) * (last_axis - first_axis) + (last_rel_0 * first_axis)) / last_rel_0
+    # print(f"({round(curr_rel_0, 2)} * ({last_axis} - {first_axis}) + ({last_rel_0} * {first_axis})) / {last_rel_0}")
+    # print(f"The result of predict: {r}")
+    return round((round(curr_rel_0, 2) * (last_axis - first_axis) + (last_rel_0 * first_axis)) / last_rel_0, 4) # the formula to predict next value of axis(x or y)
 
 def pos_transform(raw_data_path):
     if not os.path.exists(raw_data_path):
@@ -171,8 +175,8 @@ def pos_transform(raw_data_path):
                     if x_ext[0] > x_ext[-1]:
                         print(f" -> range check failed. [{x_ext[0]}, {x_ext[-1]}]")
                     
-                    print(f" -> x_ext: {x_ext}")
-                    print(f" -> y_ext: {y_ext}")
+                    print(f" -> x_ext: {x_ext} len: {len(x_ext)}")
+                    print(f" -> y_ext: {y_ext} len: {len(y_ext)}")
 
                     # df1 = pd.DataFrame(x_ext)
                     # df2 = pd.DataFrame(y_ext)
@@ -207,8 +211,8 @@ def pos_transform(raw_data_path):
                             if(x_ext[list_index] > x_ext[pos]):
                                 break
 
-                        x_ext = x_ext[:pos]
-                        y_ext = y_ext[:pos]
+                        x_ext = x_ext[:pos+1]
+                        y_ext = y_ext[:pos+1]
 
                         print(f" -> pos: {pos}")
                         # print_preprocessed_data(x_ext, y_ext)
@@ -235,7 +239,6 @@ def pos_transform(raw_data_path):
                         
                         if found:
                             pos = x_ext.index(R_rel_0_points)
-                            # print(f" -> {R_rel_0_points} is between {x_ext[pos]} and {x_ext[pos+2]}.")
                             print(f" -> pos: {pos+1}")
                             # print_preprocessed_data(x_ext, y_ext)
                         else:
@@ -273,7 +276,7 @@ def pos_transform(raw_data_path):
                         not_found_rel0points.append(not_found_dict)
                         
                         print(f" -> {L_rel_0_points} is NOT found.")
-                        print(f" -> x_ext : {x_ext}")
+                        # print(f" -> x_ext : {x_ext}")
                         for list_index in range(len(x_ext)-1):
                             if x_ext[list_index] < L_rel_0_points and L_rel_0_points < x_ext[list_index+1]:
                                 pos = list_index
@@ -289,13 +292,13 @@ def pos_transform(raw_data_path):
                         
                         if found:
                             pos = x_ext.index(L_rel_0_points)
-                            # print(f" -> {L_rel_0_points} is between {x_ext[pos]} and {x_ext[pos+2]}.")
                             print(f" -> pos: {pos+1}")
                             # print_preprocessed_data(x_ext, y_ext)
                         else:
                             print(f" -> {L_rel_0_points} is NOT between {x_ext[0]} and {x_ext[-1]}.")
 
-                    
+                    print(f" -> x_ext: {x_ext} len: {len(x_ext)}")
+                    print(f" -> y_ext: {y_ext} len: {len(y_ext)}")
 
                     print(f" -> {file_name} is doing fixing.")
                     x_ext, y_ext, isAcceptable = fix_extdata(file_name, x_ext, y_ext)
@@ -313,12 +316,14 @@ def pos_transform(raw_data_path):
                     now = x_ext[0]
                     xtemp.append(x_ext[0])
                     ytemp.append(y_ext[0])
-                    for list_index in range(1, len(x_ext)):
+                    for list_index in range(1, len(x_ext)-1):
                         if x_ext[list_index] != now:
                             xtemp.append(x_ext[list_index])
                             ytemp.append(y_ext[list_index])
                         now = x_ext[list_index]
-                    
+                    xtemp.append(x_ext[-1])
+                    ytemp.append(y_ext[-1])
+
                     if len(xtemp) != len(ytemp):
                         print(f" -> ERROR occurred in the process of removing duplicated data in {file_name}.")
                         break
@@ -349,8 +354,8 @@ def pos_transform(raw_data_path):
                         break
                     ''' 
 
-                    print(f" -> after removing duplicated data: x_ext: {x_ext}")
-                    print(f" -> after removing duplicated data: y_ext: {y_ext}")
+                    print(f" -> after removing duplicated data: x_ext: {x_ext} len: {len(x_ext)}")
+                    print(f" -> after removing duplicated data: y_ext: {y_ext} len: {len(y_ext)}")
                     
                     L_Ordinate_N_Y = tamsui_json[river_section]["L-Ordinate-N(Y)"]
                     L_Ordinate_N_Y = float(L_Ordinate_N_Y) # first Y
@@ -365,18 +370,21 @@ def pos_transform(raw_data_path):
                     print(f" -> Computing the value of axis in {file_name}.")
                     axis_x_predict_list.append(L_Abscissa_E_X)
                     axis_y_predict_list.append(L_Ordinate_N_Y)
-                    x_ext[0] = 0
+                    # print(f"0 : {L_Abscissa_E_X}, {L_Ordinate_N_Y}")
+                    x_ext[-1] -= x_ext[0]
                     # curr_rel_0, last_rel_0, first_axis, last_axis
-                    for index in range(1,len(x_ext)):
+                    for index in range(1,len(x_ext)-1):
                         x_ext[index] -= x_ext[0]
-                        predict_x = axis_predict_formula(x_ext[index],x_ext[-1],L_Abscissa_E_X,R_Abscissa_E_X)
-                        predict_y = axis_predict_formula(x_ext[index],x_ext[-1],L_Ordinate_N_Y,R_Ordinate_N_Y)
-                        # print(f"{predict_x}, {predict_y}")
+                        # print(f"{index} : {round(x_ext[index],2)}")
+                        predict_x = axis_predict_formula(x_ext[index],x_ext[-1],L_Abscissa_E_X,round(R_Abscissa_E_X,3))
+                        predict_y = axis_predict_formula(x_ext[index],x_ext[-1],L_Ordinate_N_Y,round(R_Ordinate_N_Y,3))
+                        # print(f"{index} : {predict_x}, {predict_y}")
                         axis_x_predict_list.append(predict_x)
                         axis_y_predict_list.append(predict_y)
                     # print(f"{axis_x_predict_list}")
                     # print(f"{axis_y_predict_list}")
                     
+                    x_ext[0] = 0
                     isVaild = validate_data(x_ext, axis_x_predict_list, axis_y_predict_list)
                     if(isVaild):
                         Correct_list.append(river_section)
