@@ -178,12 +178,6 @@ def pos_transform(raw_data_path):
                     print(f" -> x_ext: {x_ext} len: {len(x_ext)}")
                     print(f" -> y_ext: {y_ext} len: {len(y_ext)}")
 
-                    # df1 = pd.DataFrame(x_ext)
-                    # df2 = pd.DataFrame(y_ext)
-
-                    # df1.to_csv("x.txt")
-                    # df2.to_csv("y.txt")
-
                     R_rel_0_points = tamsui_json[river_section]["R-Rel-0-points"] # checking -96.55
                     R_rel_0_points = float(R_rel_0_points)
                     R_elevation = tamsui_json[river_section]["R-Elevation"]
@@ -210,6 +204,29 @@ def pos_transform(raw_data_path):
 
                             if(x_ext[list_index] > x_ext[pos]):
                                 break
+                        
+                        point_found = False # the flag of finding the correct index with correct rel_0 and elevation
+                        for list_value in x_ext[:]:
+                            list_index = x_ext.index(list_value)
+                            print(f" -> check {list_index}'s {list_value} {R_rel_0_points} at {y_ext[list_index]} {round(R_elevation,2)}")
+                            if(list_value == R_rel_0_points):
+                                if(y_ext[list_index] == round(R_elevation,2)):
+                                    pos = list_index # the currect position of rel_0
+                                    point_found = True # find the correct index
+                                    print(f" -> {list_value} at {list_index} is the corrert value")
+                                    continue 
+                                else: # remove the duplicated rel_0
+                                    x_ext.remove(list_value)
+                                    y_ext.remove(y_ext[list_index])
+
+                            if(list_value > R_rel_0_points):
+                                break
+                        
+                        if(not point_found): # not find the correct index -> using forced insertion
+                            print(f" -> Forced inserting {R_rel_0_points} {round(R_elevation,2)} to list")
+                            x_ext.insert(pos,R_rel_0_points)
+                            y_ext.insert(pos,round(R_elevation,2))
+                            point_found = True 
 
                         x_ext = x_ext[:pos+1]
                         y_ext = y_ext[:pos+1]
@@ -253,29 +270,34 @@ def pos_transform(raw_data_path):
                         print(f" -> {x_ext[x_ext.index(L_rel_0_points)]} is the L-Rel-0-points.")
                         found = True
                         pos = x_ext.index(L_rel_0_points)
-                        # 紀錄: 若點找到高程卻沒有要記得插入 at line 259
-                        for list_index in range(len(x_ext)-1):
-                            print(f" -> check {x_ext[list_index]} {x_ext[pos]} at {y_ext[list_index]} {round(L_elevation,2)}")
-                            if(x_ext[list_index] == x_ext[pos] and y_ext[list_index] == round(L_elevation,2)):
-                                pos = list_index # the currect position of rel_0
-                                print(f" -> {x_ext[pos]} at {list_index} is the corrert value")
-                                continue
-                            elif(x_ext[list_index] == x_ext[pos]): # remove the duplicated rel_0
-                                print(f" -> {x_ext[pos]} is removed")
-                                x_ext.remove(x_ext[pos])
-                                y_ext.remove(y_ext[pos])
+            
+                        point_found = False # the flag of finding the correct index with correct rel_0 and elevation
+                        for list_value in x_ext[:]:
+                            list_index = x_ext.index(list_value)
+                            print(f" -> check {list_index}'s {list_value} {L_rel_0_points} at {y_ext[list_index]} {round(L_elevation,2)}")
+                            if(list_value == L_rel_0_points):
+                                if(y_ext[list_index] == round(L_elevation,2)):
+                                    pos = list_index # the currect position of rel_0
+                                    point_found = True # find the correct index
+                                    print(f" -> {list_value} at {list_index} is the corrert value")
+                                    continue 
+                                else: # remove the duplicated rel_0
+                                    x_ext.remove(list_value)
+                                    y_ext.remove(y_ext[list_index])
 
-                            if(x_ext[list_index] > x_ext[pos]):
+                            if(list_value > L_rel_0_points):
                                 break
                         
-                        # print(f" -> x_ext: {x_ext}")
-                        # print(f" -> y_ext: {y_ext}")
+                        if(not point_found): # not find the correct index -> using forced insertion
+                            print(f" -> Forced inserting {L_rel_0_points} {round(L_elevation,2)} to list")
+                            x_ext.insert(pos,L_rel_0_points)
+                            y_ext.insert(pos,round(L_elevation,2))
+                            point_found = True   
 
                         x_ext = x_ext[pos:]
                         y_ext = y_ext[pos:]
 
                         print(f" -> pos: {pos}")
-                        # print_preprocessed_data(x_ext, y_ext)
                     
                     if not found: # Insert values (Left side)
                         not_found_dict = {file_name: L_rel_0_points}
@@ -299,7 +321,6 @@ def pos_transform(raw_data_path):
                         if found:
                             pos = x_ext.index(L_rel_0_points)
                             print(f" -> pos: {pos+1}")
-                            # print_preprocessed_data(x_ext, y_ext)
                         else:
                             print(f" -> {L_rel_0_points} is NOT between {x_ext[0]} and {x_ext[-1]}.")
                             print(f" -> Inserting {L_rel_0_points}, {L_elevation} to the head of x_ext and y_ext list ...")
@@ -343,11 +364,6 @@ def pos_transform(raw_data_path):
                     del xtemp
                     del ytemp
                     
-                    # df1 = pd.DataFrame(x_ext)
-                    # df2 = pd.DataFrame(y_ext)
-
-                    # df1.to_csv("x1.txt",sep='\t')
-                    # df2.to_csv("y1.txt",sep='\t')
                     '''
                     This is a exmple for using the function of validate_data(new_x, ex_data, ny_data)
                     
@@ -379,25 +395,20 @@ def pos_transform(raw_data_path):
                     print(f" -> Computing the value of axis in {file_name}.")
                     axis_x_predict_list.append(L_Abscissa_E_X)
                     axis_y_predict_list.append(L_Ordinate_N_Y)
-                    # print(f"0 : {L_Abscissa_E_X}, {L_Ordinate_N_Y}")
                     x_ext[-1] -= x_ext[0]
-                    # curr_rel_0, last_rel_0, first_axis, last_axis
+                    
                     for index in range(1,len(x_ext)-1):
                         x_ext[index] -= x_ext[0]
-                        # print(f"{index} : {round(x_ext[index],2)}")
+                        # parameter => curr_rel_0, last_rel_0, first_axis, last_axis
                         predict_x = axis_predict_formula(x_ext[index],x_ext[-1],L_Abscissa_E_X,round(R_Abscissa_E_X,3))
                         predict_y = axis_predict_formula(x_ext[index],x_ext[-1],L_Ordinate_N_Y,round(R_Ordinate_N_Y,3))
-                        # print(f"{index} : {predict_x}, {predict_y}")
                         axis_x_predict_list.append(predict_x)
                         axis_y_predict_list.append(predict_y)
-                    # print(f"{axis_x_predict_list}")
-                    # print(f"{axis_y_predict_list}")
                     
                     x_ext[0] = 0
                     isVaild = validate_data(x_ext, axis_x_predict_list, axis_y_predict_list)
                     if(isVaild):
                         Correct_list.append(river_section)
-                    # print(f"{river_section} is {isVaild}")
                     print(f" -> Process of {file_name} is all done.\n")
             else:
                 print(f" -> {river_section} is DECLINED.\n")
