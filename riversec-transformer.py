@@ -243,6 +243,9 @@ def pos_transform(raw_data_path):
                             # print_preprocessed_data(x_ext, y_ext)
                         else:
                             print(f" -> {R_rel_0_points} is NOT between {x_ext[0]} and {x_ext[-1]}.")
+                            print(f" -> Appending {R_rel_0_points}, {R_elevation} to the end of x_ext and y_ext list ...")
+                            x_ext.append(R_rel_0_points)
+                            y_ext.append(R_elevation)
                     
                     found = False # Reset found to false for left side
                     
@@ -250,14 +253,17 @@ def pos_transform(raw_data_path):
                         print(f" -> {x_ext[x_ext.index(L_rel_0_points)]} is the L-Rel-0-points.")
                         found = True
                         pos = x_ext.index(L_rel_0_points)
-
+                        # 紀錄: 若點找到高程卻沒有要記得插入 at line 259
                         for list_index in range(len(x_ext)-1):
-                            if(x_ext[list_index] == x_ext[pos] and y_ext[list_index] == L_elevation):
+                            print(f" -> check {x_ext[list_index]} {x_ext[pos]} at {y_ext[list_index]} {round(L_elevation,2)}")
+                            if(x_ext[list_index] == x_ext[pos] and y_ext[list_index] == round(L_elevation,2)):
                                 pos = list_index # the currect position of rel_0
+                                print(f" -> {x_ext[pos]} at {list_index} is the corrert value")
                                 continue
                             elif(x_ext[list_index] == x_ext[pos]): # remove the duplicated rel_0
-                                x_ext.remove(x_ext[list_index])
-                                y_ext.remove(y_ext[list_index])
+                                print(f" -> {x_ext[pos]} is removed")
+                                x_ext.remove(x_ext[pos])
+                                y_ext.remove(y_ext[pos])
 
                             if(x_ext[list_index] > x_ext[pos]):
                                 break
@@ -296,6 +302,9 @@ def pos_transform(raw_data_path):
                             # print_preprocessed_data(x_ext, y_ext)
                         else:
                             print(f" -> {L_rel_0_points} is NOT between {x_ext[0]} and {x_ext[-1]}.")
+                            print(f" -> Inserting {L_rel_0_points}, {L_elevation} to the head of x_ext and y_ext list ...")
+                            x_ext.insert(0,L_rel_0_points)
+                            y_ext.insert(0,L_elevation)
 
                     print(f" -> x_ext: {x_ext} len: {len(x_ext)}")
                     print(f" -> y_ext: {y_ext} len: {len(y_ext)}")
