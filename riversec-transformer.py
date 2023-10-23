@@ -111,6 +111,25 @@ def axis_predict_formula(curr_rel_0, last_rel_0, first_axis, last_axis):
     # print(f"The result of predict: {r}")
     return round((round(curr_rel_0, 2) * (last_axis - first_axis) + (last_rel_0 * first_axis)) / last_rel_0, 4) # the formula to predict next value of axis(x or y)
 
+
+def tr_write_csv(filename, new_x, elevation, ex_data, ny_data):
+    transform_df = pd.DataFrame()
+    
+    transform_df['new_x'] = new_x
+    # transform_df['old_x'] = old_x
+    transform_df['elevation'] = elevation
+    
+    transform_df['ex_data'] = ex_data
+    transform_df['ny_data'] = ny_data
+    
+    filename = "./TRANSFORM/" + "TRANSFORM_" + filename
+    
+    pd.set_option('display.float_format', '{:.5f}'.format)
+    
+    print(transform_df)
+    transform_df.to_csv(filename, index=False)
+
+
 def pos_transform(raw_data_path):
     if not os.path.exists(raw_data_path):
         print(f"The directory '{raw_data_path}' does not exist.")
@@ -404,11 +423,19 @@ def pos_transform(raw_data_path):
                         predict_y = axis_predict_formula(x_ext[index],x_ext[-1],L_Ordinate_N_Y,round(R_Ordinate_N_Y,3))
                         axis_x_predict_list.append(predict_x)
                         axis_y_predict_list.append(predict_y)
+                    axis_x_predict_list.append(R_Abscissa_E_X)
+                    axis_y_predict_list.append(R_Ordinate_N_Y)
                     
                     x_ext[0] = 0
                     isVaild = validate_data(x_ext, axis_x_predict_list, axis_y_predict_list)
                     if(isVaild):
                         Correct_list.append(river_section)
+                        print(" -> Data is correct.")
+                        print(f" -> Writing the data to csv file in {file_name}.")
+                        tr_write_csv(file_name, x_ext, y_ext, axis_x_predict_list, axis_y_predict_list)
+                        
+                        print(f" -> {file_name} is all done.\n")
+                    
                     print(f" -> Process of {file_name} is all done.\n")
             else:
                 print(f" -> {river_section} is DECLINED.\n")
@@ -443,6 +470,7 @@ if __name__ == "__main__":
     # make_json(dataFilePath + csvFilePath, jsonFilePath) #make json file
     readjson2Dict(jsonFilePath) #read json
     
+    # os.mkdir("./TRANSFORM")
     pos_transform(raw_data_path)
     
     # print(tamsui_json)
