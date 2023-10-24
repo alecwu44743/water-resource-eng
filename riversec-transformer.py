@@ -457,6 +457,10 @@ def pos_transform(raw_data_path):
     # print(f"\n{len(files)} files in total.")
 
 
+def merge_csv(files_path):
+    pass
+
+
 if __name__ == "__main__":
     dataFilePath = r"./data/"
     csvFilePath = r"tamsui_new.csv"
@@ -467,10 +471,15 @@ if __name__ == "__main__":
     nonduplicated_data_path = "./result_non-duplicated"
     save_data_path = "./result_non-duplicated" #commit
     
+    transformed_data_path = "../TRANSFORM"
+    
     # make_json(dataFilePath + csvFilePath, jsonFilePath) #make json file
-    readjson2Dict(jsonFilePath) #read json
+    # readjson2Dict(jsonFilePath) #read json
     
     # os.mkdir("./TRANSFORM")
-    pos_transform(raw_data_path)
+    # pos_transform(raw_data_path)
+    
+    #merge the csv files of each year
+    merge_csv(transformed_data_path)
     
     # print(tamsui_json)
