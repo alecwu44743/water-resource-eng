@@ -113,16 +113,19 @@ def axis_predict_formula(curr_rel_0, last_rel_0, first_axis, last_axis):
     return round((round(curr_rel_0, 2) * (last_axis - first_axis) + (last_rel_0 * first_axis)) / last_rel_0, 4) # the formula to predict next value of axis(x or y)
 
 
-def tr_write_csv(filename, new_x, elevation, ex_data, ny_data):
+def tr_write_csv(filename, elevation, ex_data, ny_data):
     transform_df = pd.DataFrame()
     
-    transform_df['new_x'] = new_x
-    # transform_df['old_x'] = old_x
     transform_df['elevation'] = elevation
     
     transform_df['ex_data'] = ex_data
     transform_df['ny_data'] = ny_data
-    
+
+    # if filename[1] != 1:
+    #     part1 = filename[:3]
+    #     part2 = filename[3:6]
+    #     part3 = filename[6:]
+
     filename = "./TRANSFORM/" + "TRANSFORM_" + filename
     
     pd.set_option('display.float_format', '{:.5f}'.format)
@@ -433,7 +436,7 @@ def pos_transform(raw_data_path):
                         Correct_list.append(river_section)
                         print(" -> Data is correct.")
                         print(f" -> Writing the data to csv file in {file_name}.")
-                        tr_write_csv(file_name, x_ext, y_ext, axis_x_predict_list, axis_y_predict_list)
+                        tr_write_csv(file_name, y_ext, axis_x_predict_list, axis_y_predict_list)
                         
                         print(f" -> {file_name} is all done.\n")
                     
@@ -459,20 +462,74 @@ def pos_transform(raw_data_path):
 
 
 def merge_csv(files_path):
-    pass
+    files = os.listdir(files_path)
+    
+    month_id = ["120", "100", "050"]
+    last_year = ""
+    merged_data = pd.DataFrame()
+    
+    for file_name in files:
+        for month in month_id:
+            if file_name.find(month) == -1:
+                continue
+    
+            mid_index = file_name.find(month)
+            year = file_name[10:mid_index]
+
+            if year != last_year :
+                if last_year == "":
+                    print(f"./MERGE  is not a directory.")
+                    last_year = year
+
+                elif not merged_data.empty:
+                    output_file = "./MERGE/" + "MERGE_" + last_year + ".csv"
+                    print(last_year)
+                    merged_data.to_csv(output_file, index=False)
+
+                merge_files = os.listdir("./MERGE")
+                for merge_file_name in merge_files:
+                    mid_index = merge_file_name.find(".")
+                    merge_year = merge_file_name[6:mid_index]
+                    # print(merge_year)
+                    if merge_year == year:
+                        last_year = year
+                        # print("Already exists: " + year)
+                        merged_data = pd.read_csv(os.path.join("./MERGE", merge_file_name), encoding='utf-8-sig')
+                        break
+                    else:
+                        last_year = year
+                        merged_data = pd.DataFrame()
+                        # print("New: " + year)
+                    
+            # print(f" -> year: {year} last_year: {last_year}")
+
+            to_open = files_path + "/" + file_name
+            with open(to_open, 'r', encoding='utf-8-sig') as csvf:
+                    csv_reader = pd.read_csv(csvf)
+                    merged_data = merged_data._append(csv_reader, ignore_index=True)
+
+    if not merged_data.empty:
+        output_file = "./MERGE/" + "MERGE_" + last_year + ".csv"
+        merged_data.to_csv(output_file, index=False)
+
+
+
+
 
 
 if __name__ == "__main__":
     dataFilePath = r"./data/"
     csvFilePath = r"tamsui_new.csv"
     jsonFilePath = r"tamsui.json"
+    mergeCsvPath = r"./merge/"
     
-    raw_data_path = "./result_all" #Today is a good day xD
+    raw_data_path = "/Users/wufangyi/result_all" #Today is a good day xD
 
-    nonduplicated_data_path = "./result_non-duplicated"
-    save_data_path = "./result_non-duplicated" #commit
+    nonduplicated_data_path = "/Users/wufangyi/result_non-duplicated"
+    save_data_path = "/Users/wufangyi/result_non-duplicated" #commit
     
-    transformed_data_path = "../TRANSFORM"
+    transformed_data_path = "/Users/wufangyi/TRANSFORM"
+    
     
     # make_json(dataFilePath + csvFilePath, jsonFilePath) #make json file
     # readjson2Dict(jsonFilePath) #read json
@@ -480,7 +537,8 @@ if __name__ == "__main__":
     # os.mkdir("./TRANSFORM")
     # pos_transform(raw_data_path)
     
-    #merge the csv files of each year
+    os.mkdir("./MERGE")
+    # merge the csv files of each year
     merge_csv(transformed_data_path)
     
     # print(tamsui_json)
