@@ -115,16 +115,23 @@ def axis_predict_formula(curr_rel_0, last_rel_0, first_axis, last_axis):
 
 def tr_write_csv(filename, elevation, ex_data, ny_data):
     transform_df = pd.DataFrame()
+
+    if filename[1] != "1":
+        year = filename[1:3]
+        month = filename[3:5]
+        riversection = filename[6:8]
+    else:
+        year = filename[1:4]
+        month = filename[4:6]
+        riversection = filename[7:9]
     
+    elevation.insert(0, year)
+    ex_data.insert(0, month)
+    ny_data.insert(0, riversection)
+
     transform_df['elevation'] = elevation
-    
     transform_df['ex_data'] = ex_data
     transform_df['ny_data'] = ny_data
-
-    # if filename[1] != 1:
-    #     part1 = filename[:3]
-    #     part2 = filename[3:6]
-    #     part3 = filename[6:]
 
     filename = "./TRANSFORM/" + "TRANSFORM_" + filename
     
@@ -531,14 +538,14 @@ if __name__ == "__main__":
     transformed_data_path = "/Users/wufangyi/TRANSFORM"
     
     
-    # make_json(dataFilePath + csvFilePath, jsonFilePath) #make json file
-    # readjson2Dict(jsonFilePath) #read json
+    make_json(dataFilePath + csvFilePath, jsonFilePath) #make json file
+    readjson2Dict(jsonFilePath) #read json
     
-    # os.mkdir("./TRANSFORM")
-    # pos_transform(raw_data_path)
+    os.mkdir("./TRANSFORM")
+    pos_transform(raw_data_path)
     
-    os.mkdir("./MERGE")
-    # merge the csv files of each year
-    merge_csv(transformed_data_path)
+    # os.mkdir("./MERGE")
+    # # merge the csv files of each year
+    # merge_csv(transformed_data_path)
     
     # print(tamsui_json)
