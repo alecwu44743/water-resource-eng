@@ -5,6 +5,7 @@ import pandas as pd
 from itertools import islice
 
 from math import sqrt
+#test
 
 
 def make_json(csvFilePath, jsonFilePath):
@@ -112,17 +113,18 @@ def axis_predict_formula(curr_rel_0, last_rel_0, first_axis, last_axis):
     return round((round(curr_rel_0, 2) * (last_axis - first_axis) + (last_rel_0 * first_axis)) / last_rel_0, 4) # the formula to predict next value of axis(x or y)
 
 
-def tr_write_csv(filename, new_x, elevation, ex_data, ny_data):
+def tr_write_csv(filename, elevation, ex_data, ny_data, year, month, riversection):
     transform_df = pd.DataFrame()
     
-    transform_df['new_x'] = new_x
-    # transform_df['old_x'] = old_x
+    elevation.insert(0, year)
+    ex_data.insert(0, month)
+    ny_data.insert(0, riversection)
+
     transform_df['elevation'] = elevation
-    
     transform_df['ex_data'] = ex_data
     transform_df['ny_data'] = ny_data
-    
-    filename = "./TRANSFORM/" + "TRANSFORM_" + filename
+
+    filename = "/Users/alecwu/TRANSFORM_NEW/" + "TRANSFORM_" + filename
     
     pd.set_option('display.float_format', '{:.5f}'.format)
     
@@ -432,7 +434,7 @@ def pos_transform(raw_data_path):
                         Correct_list.append(river_section)
                         print(" -> Data is correct.")
                         print(f" -> Writing the data to csv file in {file_name}.")
-                        tr_write_csv(file_name, x_ext, y_ext, axis_x_predict_list, axis_y_predict_list)
+                        tr_write_csv(file_name, y_ext, axis_x_predict_list, axis_y_predict_list, year, month, river_section)
                         
                         print(f" -> {file_name} is all done.\n")
                     
@@ -457,21 +459,138 @@ def pos_transform(raw_data_path):
     # print(f"\n{len(files)} files in total.")
 
 
-def merge_csv(files_path):
-    pass
+def merge_csv(files_path): #sorry我把妳ㄉcode改了一點點，"一點點"
+    files = os.listdir(files_path)
+    
+    river_section = tamsui_json.keys()
+    
+    river_section = list(river_section)
+    river_section.reverse()
+    
+    '''
+    the dictionary should be like this:
+    river_dict = {
+        "58":{   ------> year
+            "90A": [[elevation, ex, ny], [elevation, ex, ny], [elevation, ex, ny]], ------> each of river section
+            "90": [................],
+            "89": [], ------> may be empty
+            ....
+            "00": [................],
+        },
+        "60":{
+            "90A":[................],
+            "90":[................],
+            ....
+        },
+        ...
+        "109":{
+            "90A":[................],
+            "90":[................],
+            ....
+        }
+    }
+    '''
+    
+    # create a dictionary to store the data
+    river_dict = {}
+    for year in range(58, 110):
+        river_dict[str(year)] = {}
+        for river in river_section:
+            river_dict[str(year)][river] = []
+    
+    # print the river_dict line by line
+    for year in river_dict:
+        print(f" -> {year}: {river_dict[year]}")
+        print()
+    
+    ll = []
+    
+    print(f" -> River section: {river_section}")
+    
+    month_id = ["120", "100", "050"]
+    
+    for file_name in files:
+        if file_name.find("TRANSFORM") == -1:
+            continue
+        
+        print(f" -> Checking {files_path + '/' + file_name}...")
+        
+        for month in month_id:
+            if file_name.find(month) == -1:
+                continue
+            
+            mid_index = file_name.find(month)
+            year = file_name[11:mid_index]
+            river_section = file_name[mid_index+2:]
+            river_section = river_section.replace("csv", "")
+            river_section = river_section.replace(".", "")
+            
+            print(f" -> year: {year}, month: {month}, river_section: {river_section}")
+            
+            print(f" -> Opening {files_path + '/' + file_name}...")
+            to_open = files_path + "/" + file_name
+            df = pd.read_csv(to_open)
+            print(f" -> [v] {files_path + '/' + file_name} is opened.")
+            
+            # print(f" -> test df: {df['ny_data'][1]}")
+            
+            # add the data to the dictionary
+            print(" -> Adding data to the dictionary...")
+            for index in range(len(df['ny_data'])):
+                river_dict[year][river_section].append([df['elevation'][index], df['ex_data'][index], df['ny_data'][index]])
+            print(" -> [v] Data is added to the dictionary.")
+            
+            print()
+            break
+    
+    print("\n\n")
+    # merge the data of each year to a csv file
+    print(" -> Merging the data of each year to a csv file...")
+    for year in river_dict:
+        print(f" -> year: {year}")
+        df = pd.DataFrame()
+        elevation = []
+        ex_data = []
+        ny_data = []
+        for river in river_dict[year]:
+            print(f" -> river: {river}")
+            for index in range(len(river_dict[year][river])):
+                if index == 0: continue
+                elevation.append(river_dict[year][river][index][0])
+                ex_data.append(river_dict[year][river][index][1])
+                ny_data.append(river_dict[year][river][index][2])
+            print(f" -> [v] {river} is done.")
+        print(f" -> [v] {year} data is all collected.")
+        
+        df["elevation"] = elevation
+        df["ex_data"] = ex_data
+        df["ny_data"] = ny_data
+        
+        # save the data to a csv file
+        print(f" -> Saving the data to a csv file in /Users/alecwu/TRANSFORM_eachyear/{year}.csv...")
+        df.to_csv(f"/Users/alecwu/TRANSFORM_eachyear/{year}.csv", index=False)
+        
+        print(f" -> [v] {year} is done.")
+        print()
+
+
+
+
 
 
 if __name__ == "__main__":
     dataFilePath = r"./data/"
     csvFilePath = r"tamsui_new.csv"
     jsonFilePath = r"tamsui.json"
+    mergeCsvPath = r"./merge/"
     
-    raw_data_path = "./result_all" #Today is a good day xD
+    raw_data_path = "/Users/alecwu/result_all" #Today is a good day xD
 
-    nonduplicated_data_path = "./result_non-duplicated"
-    save_data_path = "./result_non-duplicated" #commit
+    nonduplicated_data_path = "/Users/wufangyi/result_non-duplicated"
+    save_data_path = "/Users/wufangyi/result_non-duplicated" #commit
     
-    transformed_data_path = "../TRANSFORM"
+    transformed_data_path = "/Users/alecwu/TRANSFORM"
+    
     
     # make_json(dataFilePath + csvFilePath, jsonFilePath) #make json file
     # readjson2Dict(jsonFilePath) #read json
@@ -479,7 +598,8 @@ if __name__ == "__main__":
     # os.mkdir("./TRANSFORM")
     # pos_transform(raw_data_path)
     
-    #merge the csv files of each year
-    merge_csv(transformed_data_path)
+    # os.mkdir("./MERGE")
+    # # merge the csv files of each year
+    # merge_csv(transformed_data_path)
     
     # print(tamsui_json)
